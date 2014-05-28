@@ -12,6 +12,8 @@ gem 'sinatra-activerecord'
 gem 'puma'
 gem 'tux'
 
+gem 'yelpster'        # Gem for yelp
+
 gem 'google-api-client'
 gem 'google_places'   # Gem for google places
 

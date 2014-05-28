@@ -66,6 +66,7 @@ GEM
     multi_json (1.9.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    oauth (0.4.7)
     pg (0.17.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -124,6 +125,9 @@ GEM
       sinatra (>= 1.2.1)
     tzinfo (0.3.39)
     uuidtools (2.1.4)
+    yelpster (1.2.1)
+      json (>= 1.1.1)
+      oauth (>= 0.4.5)
 
 PLATFORMS
   ruby
@@ -144,3 +148,4 @@ DEPENDENCIES
   sinatra-contrib
   sqlite3
   tux
+  yelpster
