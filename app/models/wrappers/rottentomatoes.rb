@@ -4,7 +4,7 @@ https://github.com/brianmichel/badfruit
 class RottenTomatoes
   class << self
     def API_KEY
-      "usv8geUT0SpQtWudCe2Etg"
+      "t9tswecuzx5ksd7vse2fxfzh"
     end
   end
 
