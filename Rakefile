@@ -20,3 +20,11 @@ desc 'Retrieves the current schema version number'
 task "db:version" do
   puts "Current version: #{ActiveRecord::Migrator.current_version}"
 end
+
+desc 'Populate initial default values of database'
+task "db:populate" do
+  categories = ["Unknown", "Restaurant", "Movie"]
+  categories.each { |category|
+    Category.create(name: category) if Category.find_by(name: category).nil?
+  }
+end
