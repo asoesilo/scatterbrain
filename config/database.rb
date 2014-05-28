@@ -5,8 +5,8 @@ configure do
   end
 
   # set :database, {
-  #   adapter: "sqlite3",
-  #   database: "db/db.sqlite3"
+  #   adapter: "postgresql",
+  #   database: "scatterbrain"
   # }
 
   set :database, {
