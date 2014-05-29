@@ -9,6 +9,14 @@ require 'sinatra/activerecord'
 
 require 'pry'
 
+require 'google_places'
+require 'rottentomatoes'
+require 'yelpster'
+
+require_relative '../app/models/wrappers/google_places'
+require_relative '../app/models/wrappers/rottentomatoes'
+require_relative '../app/models/wrappers/yelp'
+
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 APP_NAME = APP_ROOT.basename.to_s
 
