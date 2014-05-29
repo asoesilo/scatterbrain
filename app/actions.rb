@@ -1,3 +1,9 @@
+helpers do
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+end
+
 # Homepage (Root path)
 get '/' do
   erb :index
@@ -13,5 +19,34 @@ get '/signup' do
 end
 
 get '/logout' do
-  erb :'/'
+  session[:user_id] = nil
+  redirect '/'
+end
+
+post '/signup' do
+  @user = User.new(
+    username: params[:username],
+    password: params[:password]
+  )
+
+  if @user.save
+    session[:user_id] = @user.id
+    redirect '/'
+  else
+    erb :'auth/signup'
+  end
+end
+
+post '/login' do
+  @user = User.find_by(
+    username: params[:username], 
+    password: params[:password]
+  )
+
+  if @user
+    session[:user_id] = @user.id
+    redirect '/'
+  else
+    erb :'auth/login'
+  end
 end
