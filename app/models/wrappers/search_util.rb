@@ -9,7 +9,7 @@ class SearchUtil
       # GooglePlacesAPI.find_restaurant(keyword, latitude, longitude)
     end
 
-    def search_movie_by_name(keyword, limit = 5)
+    def search_movies_by_name(keyword, limit = 5)
       RottenTomatoesAPI.search_by_name(keyword, limit)
     end
   end
