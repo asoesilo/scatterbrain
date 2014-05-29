@@ -6,9 +6,38 @@ https://github.com/google/google-api-ruby-client
 class GooglePlacesAPI
   class << self
     @@client = nil
+    @@max_avg_rating = 5
 
     def find_restaurant(keyword, latitude, longitude)
-      client.spots_by_query(keyword, Lat: latitude, Lng: longitude, types: ['restaurant', 'food'])
+      businesses = client.spots_by_query(keyword, Lat: latitude, Lng: longitude, types: ['restaurant', 'food'])
+      
+      businesses = businesses.map { |business|
+        name = business.name
+        address = business.formatted_address
+        # city = 
+        # state = 
+        # country = 
+        phone = business.formatted_phone_number
+        rating = (business.rating.to_f / @@max_avg_rating).round(2) * 100
+        review_count = business.reviews.size
+        # url = 
+        # photo_url = 
+
+        Restaurant.new(
+          name: name,
+          address: address,
+          # city: city,
+          # state: state,
+          # country: country,
+          phone: phone,
+          rating: rating,
+          review_count: review_count,
+          # url: url,
+          # photo_url: photo_url
+          )
+      }
+
+      businesses.sort_by! { |business| -StringMatcher.getDistance(keyword, business.name) }.first(5)
     end
 
     def client

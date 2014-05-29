@@ -5,13 +5,42 @@ class YelpAPI
   class << self
     include Yelp::V1::Review::Request
     @@client = nil
+    @@max_avg_rating = 5
 
     def find_restaurant(keyword, latitude, longitude)
       request = GeoPoint.new(
         term: keyword,
         latitude: latitude,
         longitude: longitude)
-      client.search(request)
+
+      businesses = client.search(request)
+      businesses = businesses["businesses"].map { |business|
+        name = business["name"]
+        address = business["address1"]
+        city = business["city"]
+        state = business["state_code"]
+        country = business["country_code"]
+        phone = business["phone"]
+        rating = (business["avg_rating"].to_f / @@max_avg_rating).round(2) * 100
+        review_count = business["review_count"]
+        url = business["url"]
+        photo_url = business["photo_url"]
+
+        Restaurant.new(
+          name: name,
+          address: address,
+          city: city,
+          state: state,
+          country: country,
+          phone: phone,
+          rating: rating,
+          review_count: review_count,
+          url: url,
+          photo_url: photo_url
+          )
+      }
+
+      businesses.sort_by! { |business| -StringMatcher.getDistance(keyword, business.name) }.first(5)
     end
 
     def client

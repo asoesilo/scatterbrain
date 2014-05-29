@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.12.3)
+      ZenTest (~> 4.3)
+    ZenTest (4.10.0)
     activemodel (4.0.4)
       activesupport (= 4.0.4)
       builder (~> 3.1.0)
@@ -38,6 +41,8 @@ GEM
     extlib (0.9.16)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    fuzzy-string-match (0.9.6)
+      RubyInline (>= 3.8.6)
     google-api-client (0.7.1)
       addressable (>= 2.3.2)
       autoparse (>= 0.3.3)
@@ -135,6 +140,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  fuzzy-string-match
   google-api-client
   google_places
   pg
