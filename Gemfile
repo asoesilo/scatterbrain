@@ -19,6 +19,8 @@ gem 'google_places'   # Gem for google places
 
 gem 'rottentomatoes'  # Gem for rottentomatoes
 
+gem 'fuzzy-string-match'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-debugger'

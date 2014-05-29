@@ -12,10 +12,7 @@ require 'pry'
 require 'google_places'
 require 'rottentomatoes'
 require 'yelpster'
-
-require_relative '../app/models/wrappers/google_places'
-require_relative '../app/models/wrappers/rottentomatoes'
-require_relative '../app/models/wrappers/yelp'
+require 'fuzzystringmatch'
 
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 APP_NAME = APP_ROOT.basename.to_s
@@ -36,3 +33,9 @@ require APP_ROOT.join('config', 'database')
 
 # Load the routes / actions
 require APP_ROOT.join('app', 'actions')
+
+# Require all ruby files for our wrapper classes
+Dir["./app/models/wrappers/*.rb"].each {|file| require file }
+
+# Require all ruby files for our entries model classes
+Dir["./app/models/entries/*.rb"].each {|file| require file }
