@@ -6,4 +6,12 @@ class Entry < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
   belongs_to :provider
+
+  def to_s
+    "Category ID: #{category_id} " <<
+    "User ID: #{user_id} " <<
+    "Content: #{content} " <<
+    "Provider ID: #{provider_id} " <<
+    "Provider Entry ID: #{provider_entry_id}"
+  end
 end
