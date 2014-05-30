@@ -1,3 +1,4 @@
+<!-- Home page -->
 <form role="form">
   <div class="form-group">
     <div class="row">
@@ -21,3 +22,25 @@
     </div>
   </div>
 </form>
+
+<!-- Modal -->
+<% if !current_user %>
+  <div class="modal fade" id="home-modal" tabindex="-1" role="dialog" aria-labelledby="home-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="home-modal-label">Welcome to ScatterBrain App</h4>
+        </div>
+        <div class="modal-body">
+          Feel free to try the app before creating an account.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Try</button></a>
+          <a href="login"><button type="button" class="btn btn-primary">Login</button></a>
+          <a href="signup"><button type="button" class="btn btn-primary">Sign Up</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
