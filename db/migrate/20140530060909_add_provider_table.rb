@@ -4,13 +4,13 @@ class AddProviderTable < ActiveRecord::Migration
       t.string :name
     end
 
-    add_reference :entries, :providers
+    add_reference :entries, :provider
     add_column :entries, :provider_entry_id, :string
   end
 
   def down
-    delete_column :entries, :provider_entry_id
-    delete_reference :entries, :providers
+    remove_column :entries, :provider_entry_id
+    remove_reference :entries, :provider
     drop_table :providers
   end
 end
