@@ -1,4 +1,6 @@
 class Restaurant
+  include Jsonable
+  attr_reader :id
   attr_reader :name
   attr_reader :address
   attr_reader :city
@@ -11,6 +13,7 @@ class Restaurant
   attr_reader :photo_url
 
   def initialize(args)
+    @id = args[:id]
     @name = args[:name]
     @address = args[:address]
     @city = args[:city]
@@ -24,6 +27,7 @@ class Restaurant
   end
 
   def to_s
+    "ID: #{@id}" <<
     "Name: #{@name};" <<
     "Address: #{@address};" <<
     "City: #{@city};" <<

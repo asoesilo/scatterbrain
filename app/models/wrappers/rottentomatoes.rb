@@ -10,7 +10,11 @@ class RottenTomatoesAPI
         Rotten.api_key = api_key
       end
       movies = RottenMovie.find(title: keyword, limit: limit)
+      if(!movies.is_a?(Array))
+        movies = [movies]
+      end
       movies = movies.map { |movie|
+        id = movie.id
         title = movie.title
         year = movie.year
         theater_release_date = movie.release_dates.theater
@@ -25,6 +29,7 @@ class RottenTomatoesAPI
         url = movie.links.alternate
 
         Movie.new(
+          id: id,
           title: title,
           year: year,
           theater_release_date: theater_release_date,

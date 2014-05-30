@@ -13,4 +13,9 @@ task "db:populate" do
   categories.each { |category|
     Category.create(name: category) if Category.find_by(name: category).nil?
   }
+
+  providers = ["yelp", "rottentomatoes"]
+  providers.each { |provider|
+    Provider.create(name: provider) if Provider.find_by(name: provider).nil?
+  }
 end

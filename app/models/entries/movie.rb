@@ -1,4 +1,6 @@
-class Movie
+class Movie 
+  include Jsonable
+  attr_reader :id
   attr_reader :title
   attr_reader :year
   attr_reader :theater_release_date
@@ -13,6 +15,7 @@ class Movie
   attr_reader :url
 
   def initialize(args)
+    @id = args[:id]
     @title = args[:title]
     @year = args[:year]
     @theater_release_date = args[:theater_release_date]

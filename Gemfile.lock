@@ -61,6 +61,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
     json (1.8.1)
+    jsonable (0.0.3)
     jwt (1.0.0)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -143,6 +144,7 @@ DEPENDENCIES
   fuzzy-string-match
   google-api-client
   google_places
+  jsonable
   pg
   pry
   pry-debugger

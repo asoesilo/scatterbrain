@@ -8,6 +8,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 
 require 'pry'
+require 'jsonable'
 
 require 'google_places'
 require 'rottentomatoes'

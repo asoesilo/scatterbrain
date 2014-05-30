@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem 'rake'
 gem 'activesupport'
 gem 'pg'
+gem 'jsonable'
 
 gem 'sinatra'
 gem 'sinatra-contrib'

@@ -1,0 +1,80 @@
+<div ng-controller="SearchCtrl">
+
+  <form role="form" ng-submit="searchEntry()">
+    <div class="form-group">
+      <div class="row">
+        <div class="btn-group col-xs-offset-1 col-xs-11 col-sm-offset-4 col-sm-8 col-md-offset-5 col-md-7" data-toggle="buttons">
+          <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('movie')}" ng-click="selectTab('movie')">
+            <input type="radio">
+            <span class="fa fa-film fa-4x" id="category_movie" name="options"></span> 
+            <br>Movie
+          </button>
+          <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('book')}" ng-click="selectTab('book')">
+            <input type="radio">
+            <span class="fa fa-book fa-4x" id="category_book" name="options"></span> 
+            <br>Book
+          </button>
+          <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('restaurant')}" ng-click="selectTab('restaurant')">
+            <input type="radio">
+            <span class="fa fa-cutlery fa-4x" id="category_restaurant" name="options"></span> 
+            <br>Restaurant
+          </button>
+          <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('other')}" ng-click="selectTab('other')">
+            <input type="radio">
+            <span class="fa fa-info fa-4x" id="category_other" name="options"></span> 
+            <br>Other
+          </button>
+        </div>
+      </div>
+      <br>
+      <div class="row">  
+        <div class="col-xs-offset-1 col-xs-8 col-sm-offset-1 col-sm-9 col-md-offset-1 col-md-10">
+          <input type="text" class="form-control input-lg" placeholder="Type your note" autofocus="" ng-model="keyword">
+        </div>
+        <div class="col-xs-1 col-sm-1">
+          <button class="btn btn-default" type="Submit">
+            <span class="fa fa-plus fa-2x"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <h3>{{keyword}}</h3>
+
+  <div ng-show="restaurants.length">
+    <ul>
+      <li ng-repeat="restaurant in restaurants">
+        <h4>{{restaurant.name}}</h4>
+        <p>
+          <div>Address: {{restaurant.address}}</div><br>
+          <div>Phone: {{restaurant.phone}}</div><br>
+          <div>Rating: {{restaurant.rating}} ({{restaurant.review_count}} reviews)</div><br>
+          <div>Link: <a ng-href="{{restaurant.url}}" target="_blank">More information</a></div><br>
+        </p>
+        <img ng-src="{{restaurant.photo_url}}">
+        <button>Add</button>
+      </li>
+    </ul>
+  </div>
+
+  <div ng-show="movies.length">
+    <ul>
+      <li ng-repeat="movie in movies">
+        <h4>{{movie.title}}({{movie.year}})</h4>
+        <p>
+          <div>Summary: {{movie.summary}}</div><br>
+          <div>Runtime: {{movie.runtime}}</div><br>
+          <div>Theatre release date: {{movie.theater_release_date}}</div><br>
+          <div>DVD release date: {{movie.dvd_release_date}}</div><br>
+          <div>Audience rating: {{movie.audience_rating}}</div><br>
+          <div>Critics rating: {{movie.critics_rating}}</div><br>
+          <div>Rating: {{movie.rating}} ({{movie.review_count}} reviews)</div><br>
+          <div>Link: <a ng-href="{{movie.url}}" target="_blank">More information</a></div><br>
+        </p>
+        <img ng-src="{{movie.photo_url}}">
+        <button ng-click="">Add</button>
+      </li>
+    </ul>
+  </div>
+</div>

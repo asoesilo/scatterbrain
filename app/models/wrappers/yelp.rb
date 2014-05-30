@@ -15,6 +15,7 @@ class YelpAPI
 
       businesses = client.search(request)
       businesses = businesses["businesses"].map { |business|
+        id = business["id"]
         name = business["name"]
         address = business["address1"]
         city = business["city"]
@@ -27,6 +28,7 @@ class YelpAPI
         photo_url = business["photo_url"]
 
         Restaurant.new(
+          id: id,
           name: name,
           address: address,
           city: city,

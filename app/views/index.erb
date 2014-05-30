@@ -1,43 +1,4 @@
 <!-- Home page -->
-<form role="form">
-  <div class="form-group">
-    <div class="row">
-      <div class="btn-group col-xs-offset-1 col-xs-11 col-sm-offset-4 col-sm-8 col-md-offset-5 col-md-7" data-toggle="buttons">
-        <button class="btn btn-default custom-btn-cat-width">
-          <input type="radio">
-          <span class="fa fa-film fa-4x" id="category_movie" name="options"></span> 
-          <br>Movie
-        </button>
-        <button class="btn btn-default custom-btn-cat-width">
-          <input type="radio">
-          <span class="fa fa-book fa-4x" id="category_book" name="options"></span> 
-          <br>book
-        </button>
-        <button class="btn btn-default custom-btn-cat-width">
-          <input type="radio">
-          <span class="fa fa-cutlery fa-4x" id="category_restaurant" name="options"></span> 
-          <br>Restaurant
-        </button>
-        <button class="btn btn-default custom-btn-cat-width">
-          <input type="radio">
-          <span class="fa fa-info fa-4x" id="category_other" name="options"></span> 
-          <br>Other
-        </button>
-      </div>
-    </div>
-    <br>
-    <div class="row">  
-      <div class="col-xs-offset-1 col-xs-8 col-sm-offset-1 col-sm-9 col-md-offset-1 col-md-10">
-        <input type="text" class="form-control input-lg" placeholder="Type your note" autofocus="">
-      </div>
-      <div class="col-xs-1 col-sm-1">
-        <button class="btn btn-default" type="Submit">
-          <span class="fa fa-plus fa-2x"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</form>
 
 <!-- Modal -->
 <% if !current_user %>
@@ -60,3 +21,7 @@
     </div>
   </div>
 <% end %>
+
+<div ng-app="scatterBrainApp">
+  <div ng-view></div>
+</div>
