@@ -1,15 +1,16 @@
 'use strict';
 
 /* Controllers */
-var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource']);
+var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'scatterBrainAppServices']);
 
-scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', //'Restaurants',
-  function($scope, $resource){//, Restaurants) {
-    $scope.name = "hello";
-    $scope.category = 'movie';
+scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMovies', 'UserRestaurants', 'SharedValues',
+  function($scope, $resource, UserMovies, UserRestaurants, SharedValues){
+    $scope.category = SharedValues.getCurrentCategory();
+    $scope.movies = SharedValues.getMovies();
+    $scope.restaurants = SharedValues.getRestaurants();
 
-    var restaurantsResource = $resource("/restaurants", {},{ get: {method: 'get', isArray:true}});
-    var moviesResource = $resource("/movies", {},{ get: {method: 'get', isArray:true}});
+    var restaurantsSearchResource = $resource("/restaurants", {},{ get: {method: 'get', isArray:true}});
+    var moviesSearchResource = $resource("/movies", {},{ get: {method: 'get', isArray:true}});
 
     var getLoginStatus = function getLoginStatus() {
       var loginResource = $resource("/login/status");
@@ -30,18 +31,27 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', //'Rest
 
     getLoginStatus();
 
+    var setMovies = function(newMovies) {
+      $scope.movies = newMovies;
+      SharedValues.setMovies(newMovies);
+    };
+
+    var setRestaurants = function(newRestaurants) {
+      $scope.restaurants = newRestaurants;
+      SharedValues.setRestaurants(newRestaurants);
+    };
+
     $scope.searchEntry = function searchEntry() {
-      $scope.restaurants = []
-      $scope.movies = []
+      setRestaurants([]);
+      setMovies([]);
+
       console.log("in searchEntry");
-      // console.log("Local storage:" + $localStorage);
-      console.log("Scope storage:" + $scope.$storage);
       switch($scope.category) {
         case 'restaurant':
-          $scope.restaurants = restaurantsResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548});
+          setRestaurants(restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548}));
           break;
         case 'movie':
-          $scope.movies = moviesResource.get({keyword: $scope.keyword});
+          setMovies(moviesSearchResource.get({keyword: $scope.keyword}));
           break;
         case 'book':
           break;
@@ -51,6 +61,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', //'Rest
     $scope.selectTab = function selectTab(category){
       console.log("select tab " + category)
       $scope.category = category;
+      SharedValues.setCurrentCategory(category);
     };
 
     $scope.isSelected = function isSelected(category){
@@ -58,17 +69,63 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', //'Rest
     };
 
     $scope.addMovie = function addMovie(movie_id){
-      var resource = $resource("/movies/new");
-      resource.save({id: movie_id});
+      console.log("Attempt to add new movie: " + movie_id);
+      var movie = new UserMovies({rotten_tomatoes_movie_id: movie_id});
+      movie.$save();
     };
 
     $scope.addRestaurant = function addRestaurant(restaurant_id){
-      var resource = $resource("/restaurants/new");
-      resource.save({id: restaurant_id});
+      console.log("Attempt to add new restaurant: " + restaurant_id);
+      var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
+      restaurant.$save();
     };
   }]);
 
+scatterBrainControllers.controller('RestaurantDetailCtrl', ['$scope', '$routeParams', 'UserRestaurants', 'SharedValues',
+  function($scope, $routeParams, UserRestaurants, SharedValues){
+    $scope.restaurants = SharedValues.getRestaurants();
+    $scope.restaurant_index = parseInt($routeParams.restaurant_index);
+    $scope.restaurant = $scope.restaurants[$scope.restaurant_index];
 
+    $scope.showNextRestaurant = function showNextRestaurant(){
+      $scope.restaurant_index = ($scope.restaurant_index + 1) % $scope.restaurants.length;
+      $scope.restaurant = $scope.restaurants[$scope.restaurant_index];
+      console.log("Next restaurant index: " + $scope.restaurant_index);
+    };
+
+    $scope.showPreviousRestaurant = function showPreviousRestaurant(){
+      $scope.restaurant_index = ($scope.restaurant_index - 1);
+      if($scope.restaurant_index < 0)
+      {
+        $scope.restaurant_index = $scope.restaurants.length - 1;
+      }
+      $scope.restaurant = $scope.restaurants[$scope.restaurant_index];
+      console.log("Previous restaurant index: " + $scope.restaurant_index);
+    };
+}]);
+
+scatterBrainControllers.controller('MovieDetailCtrl', ['$scope', '$routeParams', 'UserMovies', 'SharedValues',
+  function($scope, $routeParams, UserMovies, SharedValues){
+    $scope.movies = SharedValues.getMovies();
+    $scope.movie_index = parseInt($routeParams.movie_index);
+    $scope.movie = $scope.movies[$scope.movie_index];
+
+    $scope.showNextMovie = function showNextMovie(){
+      $scope.movie_index = ($scope.movie_index + 1) % $scope.movies.length;
+      $scope.movie = $scope.movies[$scope.movie_index];
+      console.log("Next movie index: " + $scope.movie_index);
+    };
+
+    $scope.showPreviousMovie = function showPreviousMovie(){
+      $scope.movie_index = ($scope.movie_index - 1);
+      if($scope.movie_index < 0)
+      {
+        $scope.movie_index = $scope.movies.length - 1;
+      }
+      $scope.movie = $scope.movies[$scope.movie_index];
+      console.log("Previous movie index: " + $scope.movie_index);
+    };
+}]);
 
 // var phonecatControllers = angular.module('phonecatControllers', []);
 

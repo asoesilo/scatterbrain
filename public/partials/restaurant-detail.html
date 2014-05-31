@@ -1,0 +1,14 @@
+<div ng-controller="RestaurantDetailCtrl">
+  <h4>{{restaurant.name}}</h4>
+  <p>
+    <div>Address: {{restaurant.address}}</div><br>
+    <div>Phone: {{restaurant.phone}}</div><br>
+    <div>Rating: {{restaurant.rating}} ({{restaurant.review_count}} reviews)</div><br>
+    <div>Link: <a ng-href="{{restaurant.url}}" target="_blank">More information</a></div><br>
+  </p>
+  <img ng-src="{{restaurant.photo_url}}">
+  <!-- <button ng-click="addRestaurant(restaurant.id)">Add</button> -->
+  <button ng-click="showPreviousRestaurant()">Previous</button>
+  <button ng-click="showNextRestaurant()">Next</button>
+  <a href="#/search">Back to list</a>
+</div>

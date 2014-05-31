@@ -15,6 +15,14 @@ scatterBrainApp.config(['$routeProvider',
         templateUrl: '/partials/search.html',
         controller: 'SearchCtrl'
       }).
+      when('/restaurant/:restaurant_index', {
+        templateUrl: '/partials/restaurant-detail.html',
+        controller: 'RestaurantDetailCtrl'
+      }).
+      when('/movie/:movie_index', {
+        templateUrl: '/partials/movie-detail.html',
+        controller: 'MovieDetailCtrl'
+      }).
       otherwise({
         redirectTo: '/search'
       });

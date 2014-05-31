@@ -71,3 +71,30 @@ get '/restaurants' do
   @restaurants = SearchUtil.find_restaurant(keyword, latitude, longitude)
   @restaurants.to_json
 end
+
+
+post '/user/restaurants' do
+  @params = JSON.parse(request.body.read)
+  puts "Add new restaurant with ID #{@params['yelp_business_id']} to user #{current_user.id}"
+  yelp_business_id = @params["yelp_business_id"]
+
+  entry = current_user.entries.create(
+    provider_entry_id: yelp_business_id,
+    category: Category.restaurant,
+    provider: Provider.yelp,
+    )
+end
+
+post '/user/movies' do
+  @params = JSON.parse(request.body.read)
+  puts "Add new movie with ID #{@params['rotten_tomatoes_movie_id']} to user #{current_user.id}"
+  rotten_tomatoes_movie_id = @params["rotten_tomatoes_movie_id"]
+
+  entry = current_user.entries.create(
+    provider_entry_id: rotten_tomatoes_movie_id,
+    category: Category.movie,
+    provider: Provider.rottentomatoes,
+    )
+
+  puts "Created new movie #{entry.id}"
+end
