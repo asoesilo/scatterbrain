@@ -6,6 +6,14 @@ class Entry < ActiveRecord::Base
   belongs_to :category
   belongs_to :provider
 
+  def to_s
+    "Category ID: #{category_id} " <<
+    "User ID: #{user_id} " <<
+    "Content: #{content} " <<
+    "Provider ID: #{provider_id} " <<
+    "Provider Entry ID: #{provider_entry_id}"
+  end
+
   class << self
     def create_with_id(provider_entry_id, user, category, provider)
       create(user: user,

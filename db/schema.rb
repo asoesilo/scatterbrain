@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140530060909) do
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "providers_id"
+    t.integer  "provider_id"
     t.string   "provider_entry_id"
   end
 
