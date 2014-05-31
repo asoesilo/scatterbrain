@@ -103,11 +103,17 @@ get '/user/restaurants' do
   restaurants.to_json
 end
 
-## Code Additions
-
 get '/user/movies' do
   movies = current_user.entries.where( category: Category.find_by(name: "Movie") ).map do |entry|
     restaurant = RottenTomatoesAPI.find_movie_by_id(entry.provider_entry_id)
   end
   movies.to_json
+end
+
+get '/user/restaurants/:provider_entry_id' do
+  YelpAPI.find_restaurant_by_id( params[:provider_entry_id] ).to_json
+end
+  
+get '/user/movies/:provider_entry_id' do
+  RottenTomatoesAPI.find_movie_by_id( params[:provider_entry_id] ).to_json
 end
