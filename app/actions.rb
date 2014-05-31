@@ -72,7 +72,6 @@ get '/restaurants' do
   @restaurants.to_json
 end
 
-
 post '/user/restaurants' do
   @params = JSON.parse(request.body.read)
   puts "Add new restaurant with ID #{@params['yelp_business_id']} to user #{current_user.id}"
@@ -95,6 +94,11 @@ post '/user/movies' do
     category: Category.movie,
     provider: Provider.rottentomatoes,
     )
+end
 
-  puts "Created new movie #{entry.id}"
+get '/user/restaurants' do
+  restaurants = current_user.entries.where( category: Category.find_by(name: "Restaurant") ).map do |entry|
+    restaurant = YelpAPI.find_restaurant_by_id(entry.provider_entry_id)
+  end
+  restaurants.to_json
 end

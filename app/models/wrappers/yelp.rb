@@ -4,56 +4,96 @@ https://github.com/nvd/yelpster
 class YelpAPI
   class << self
     include Yelp::V1::Review::Request
-    @@client = nil
+
+    # Retrieve details of business via yelp business id
+    include Yelp::V2::Business::Request
+
     @@max_avg_rating = 5
 
     def find_restaurant(keyword, latitude, longitude)
+      client = create_new_client
       request = GeoPoint.new(
         term: keyword,
         latitude: latitude,
-        longitude: longitude)
+        longitude: longitude
+        )
 
       businesses = client.search(request)
-      businesses = businesses["businesses"].map { |business|
-        id = business["id"]
-        name = business["name"]
-        address = business["address1"]
-        city = business["city"]
-        state = business["state_code"]
-        country = business["country_code"]
-        phone = business["phone"]
-        rating = (business["avg_rating"].to_f / @@max_avg_rating).round(2) * 100
-        review_count = business["review_count"]
-        url = business["url"]
-        photo_url = business["photo_url"]
-
-        Restaurant.new(
-          id: id,
-          name: name,
-          address: address,
-          city: city,
-          state: state,
-          country: country,
-          phone: phone,
-          rating: rating,
-          review_count: review_count,
-          url: url,
-          photo_url: photo_url
-          )
-      }
-
+      businesses = businesses["businesses"].map { |business| parse_result(business) }
       businesses.sort_by! { |business| -StringMatcher.getDistance(keyword, business.name) }.first(5)
     end
 
-    def client
-      if(!@@client)
-        Yelp.configure(yws_id: yws_id,
-          consumer_key: consumer_key,
-          consumer_secret: consumer_secret,
-          token: token,
-          token_secret: token_secret)
-        @@client = Yelp::Client.new
-      end
+    def parse_result(business)
+      id = business["id"]
+      name = business["name"]
+      address = business["address1"]
+      city = business["city"]
+      state = business["state_code"]
+      country = business["country_code"]
+      phone = business["phone"]
+      rating = (business["avg_rating"].to_f / @@max_avg_rating).round(2) * 100
+      review_count = business["review_count"]
+      url = business["url"]
+      photo_url = business["photo_url"]
+
+      Restaurant.new(
+        id: id,
+        name: name,
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        phone: phone,
+        rating: rating,
+        review_count: review_count,
+        url: url,
+        photo_url: photo_url
+        )
+    end
+
+    def find_restaurant_by_id(provider_entry_id)
+      client = create_new_client
+      request = Id.new( yelp_business_id: provider_entry_id )
+      response = client.search(request)
+      parse_result_by_id(response, provider_entry_id)
+    end
+
+    def parse_result_by_id(business, provider_entry_id)
+      id = provider_entry_id
+      name = business["name"] 
+      location = business["location"] 
+      address = location["address"][0]
+      city = location["city"] 
+      state = location["state_code"] 
+      country = location["country_code"]
+      phone = business["phone"] 
+      rating = (business["rating"].to_f / @@max_avg_rating).round(2) * 100
+      review_count = business["review_count"]
+      url = business["url"]
+      photo_url = business["image_url"]
+
+      Restaurant.new(
+        id: id,
+        name: name,
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        phone: phone,
+        rating: rating,
+        review_count: review_count,
+        url: url,
+        photo_url: photo_url
+        )
+    end
+
+    def create_new_client
+      Yelp.configure(yws_id: yws_id,
+        consumer_key: consumer_key,
+        consumer_secret: consumer_secret,
+        token: token,
+        token_secret: token_secret)
+      Yelp::Client.new
     end
 
     def yws_id
