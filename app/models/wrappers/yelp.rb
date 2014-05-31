@@ -4,8 +4,6 @@ https://github.com/nvd/yelpster
 class YelpAPI
   class << self
     include Yelp::V1::Review::Request
-
-    # Retrieve details of business via yelp business id
     include Yelp::V2::Business::Request
 
     @@max_avg_rating = 5

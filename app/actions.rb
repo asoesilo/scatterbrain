@@ -59,7 +59,7 @@ end
 get '/movies' do
   keyword = params[:keyword]
 
-  @movies = SearchUtil.search_movies_by_name(keyword)
+  @movies = SearchUtil.find_movie(keyword)
   @movies.to_json
 end
 
@@ -101,4 +101,13 @@ get '/user/restaurants' do
     restaurant = YelpAPI.find_restaurant_by_id(entry.provider_entry_id)
   end
   restaurants.to_json
+end
+
+## Code Additions
+
+get '/user/movies' do
+  movies = current_user.entries.where( category: Category.find_by(name: "Movie") ).map do |entry|
+    restaurant = RottenTomatoesAPI.find_movie_by_id(entry.provider_entry_id)
+  end
+  movies.to_json
 end
