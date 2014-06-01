@@ -49,7 +49,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       console.log("in searchEntry");
       switch($scope.category) {
         case 'restaurant':
-          $scope.message = "Searching for movies with '" + $scope.keyword + "':";
+          $scope.message = "Searching for restaurants with '" + $scope.keyword + "' ...";
           restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548})
             .$promise.then(
               function(newRestaurants) {
@@ -66,7 +66,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
             );
           break;
         case 'movie':
-          $scope.message = "Searching for movie with '" + $scope.keyword + "'";
+          $scope.message = "Searching for movies with '" + $scope.keyword + "' ...";
           moviesSearchResource.get({keyword: $scope.keyword})
             .$promise.then(
               function(newMovies) {
