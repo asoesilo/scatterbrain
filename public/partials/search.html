@@ -41,45 +41,60 @@
   </form>
 
   <h3>{{message}}</h3>
-
+    
   <div ng-show="restaurants.length">
-    <ul>
-      <li ng-repeat="restaurant in restaurants track by $index">
-        <h4>
-          <a href="#/restaurant/{{$index}}">{{restaurant.name}}</a>
-        </h4>
-        <p>
-          <div>Address: {{restaurant.address}}</div><br>
-          <div>Phone: {{restaurant.phone}}</div><br>
-          <div>Rating: {{restaurant.rating}} ({{restaurant.review_count}} reviews)</div><br>
-          <div>Link: <a ng-href="{{restaurant.url}}" target="_blank">More information</a></div><br>
-        </p>
-        <img ng-src="{{restaurant.photo_url}}">
-        <button ng-click="addRestaurantToList($index)">Add</button>
-      </li>
-    </ul>
+    <div class="container-fluid">
+      <div class="row tile-background">
+        <div class="col-sm-3 tile-centered" ng-repeat="restaurant in restaurants track by $index">
+          <div class="tile-progress tile-restaurants tile-buffer" id="tile-custom-height">
+            <div class="tile-header">
+              <center>
+                <h3>
+                  <a href="#/restaurant/{{$index}}">{{restaurant.name}}
+                  </a>
+                </h3>
+                <a href="#/restaurant/{{$index}}">
+                    <img ng-src="{{restaurant.photo_url}}" class="img-responsive" height="180px" width="180px">
+                </a>
+                <br>{{restaurant.address}}, {{restaurant.city}}
+                <br>{{restaurant.phone}}
+                <br><br>
+                <button type="button" class="btn btn-default" ng-click="addRestaurantToList($index)">
+                  <span class="fa fa-plus fa-2x"> Add<span>
+                </button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>            
+    </div>    
   </div>
 
   <div ng-show="movies.length">
-    <ul>
-      <li ng-repeat="movie in movies track by $index">
-        <h4>
-          <a href="#/movie/{{$index}}">{{movie.title}}</a> <span ng-show="movie.year">({{movie.year}})</span>
-        </h4>
-        <p>
-          <div>Summary: {{movie.summary}}</div><br>
-          <div>Runtime: {{movie.runtime}}</div><br>
-          <div>Theatre release date: {{movie.theater_release_date}}</div><br>
-          <div>DVD release date: {{movie.dvd_release_date}}</div><br>
-          <div>Audience rating: {{movie.audience_rating}}</div><br>
-          <div>Critics rating: {{movie.critics_rating}}</div><br>
-          <div>Rating: {{movie.rating}} ({{movie.review_count}} reviews)</div><br>
-          <div>Link: <a ng-href="{{movie.url}}" target="_blank">More information</a></div><br>
-        </p>
-        <img ng-src="{{movie.photo_url}}">
-        <button ng-click="addMovieToList($index)">Add</button>
-      </li>
-    </ul>
+    <div class="container-fluid">
+      <div class="row title-background">
+        <div class="col-sm-3 tile-centered" ng-repeat="movie in movies track by $index">
+          <div class="tile-progress tile-movies tile-buffer">
+            <div class="tile-header">
+              <center>
+                <h3>
+                  <a href="#/movie/{{$index}}">{{movie.title}} 
+                    <span ng-show="movie.year">({{movie.year}})</span>
+                  </a>
+                </h3>
+                <a href="#/movie/{{$index}}">
+                    <img ng-src="{{movie.photo_url}}" class="img-responsive">
+                </a>
+                <br>
+                <button type="button" class="btn btn-default" ng-click="addMovieToList($index)">
+                  <span class="fa fa-plus fa-2x"> Add<span>
+                </button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>            
+    </div>    
   </div>
 
   <div ng-show="userRestaurants.length">
@@ -125,4 +140,5 @@
       </ul>
     </section>
   </div>
+
 </div>

@@ -8,7 +8,7 @@ class YelpAPI
 
     @@max_avg_rating = 5
 
-    def find_restaurant(keyword, latitude, longitude)
+    def find_restaurant(keyword, latitude, longitude, limit=4)
       client = create_new_client
       request = GeoPoint.new(
         term: keyword,
@@ -18,7 +18,7 @@ class YelpAPI
 
       businesses = client.search(request)
       businesses = businesses["businesses"].map { |business| parse_result(business) }
-      businesses.sort_by! { |business| -StringMatcher.getDistance(keyword, business.name) }.first(5)
+      businesses.sort_by! { |business| -StringMatcher.getDistance(keyword, business.name) }.first(limit)
     end
 
     def parse_result(business)
