@@ -8,6 +8,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
     $scope.category = SharedValues.getCurrentCategory();
     $scope.movies = SharedValues.getMovies();
     $scope.restaurants = SharedValues.getRestaurants();
+    $scope.message = "";
 
     var restaurantsSearchResource = $resource("/restaurants", {},{ get: {method: 'get', isArray:true}});
     var moviesSearchResource = $resource("/movies", {},{ get: {method: 'get', isArray:true}});
@@ -48,10 +49,38 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       console.log("in searchEntry");
       switch($scope.category) {
         case 'restaurant':
-          setRestaurants(restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548}));
+          $scope.message = "Searching for movies with '" + $scope.keyword + "':";
+          restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548})
+            .$promise.then(
+              function(newRestaurants) {
+                if(newRestaurants.length > 0)
+                {
+                  $scope.message = "Search result for restaurants with '" + $scope.keyword + "'";
+                  setRestaurants(newRestaurants);
+                }
+                else
+                {
+                  $scope.message = "No restaurants found with '" + $scope.keyword + "'";
+                }
+              }
+            );
           break;
         case 'movie':
-          setMovies(moviesSearchResource.get({keyword: $scope.keyword}));
+          $scope.message = "Searching for movie with '" + $scope.keyword + "'";
+          moviesSearchResource.get({keyword: $scope.keyword})
+            .$promise.then(
+              function(newMovies) {
+                if(newMovies.length > 0)
+                {
+                  $scope.message = "Search result for movies with '" + $scope.keyword + "'";
+                  setMovies(newMovies);
+                }
+                else
+                {
+                  $scope.message = "No movies found with '" + $scope.keyword + "'";
+                }
+              }
+            );
           break;
         case 'book':
           break;
@@ -68,16 +97,32 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       return $scope.category === category;
     };
 
-    $scope.addMovie = function addMovie(movie_id){
+    $scope.addMovieToList = function addMovieToList(movie_index){
+      var movie_id = $scope.movies[movie_index].id;
       console.log("Attempt to add new movie: " + movie_id);
       var movie = new UserMovies({rotten_tomatoes_movie_id: movie_id});
-      movie.$save();
+      movie.$save(function(){
+        $scope.addMovie($scope.movies[movie_index]);
+      });
     };
 
-    $scope.addRestaurant = function addRestaurant(restaurant_id){
+    $scope.addRestaurantToList = function addRestaurantToList(restaurant_index){
+      var restaurant_id = $scope.restaurants[restaurant_index].id;
       console.log("Attempt to add new restaurant: " + restaurant_id);
       var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
-      restaurant.$save();
+      restaurant.$save(function(){
+        $scope.addRestaurant($scope.restaurants[restaurant_index]);
+      });
+    };
+
+    $scope.addRestaurant = function addRestaurant(restaurant) {
+      console.log("Add restaurant to user's restaurant list: " + restaurant.id);
+      $scope.userRestaurants.push(restaurant);
+    };
+
+    $scope.addMovie = function addMovie(movie) {
+      console.log("Add movie to user's movie list: " + movie.id);
+      $scope.userMovies.push(movie);
     };
 
     $scope.refreshUserRestaurants = function refreshUserRestaurants() {
