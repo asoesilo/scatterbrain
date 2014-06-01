@@ -100,6 +100,8 @@ get '/user/restaurants' do
   puts "Retrieving list of restaurants for user #{current_user.id}"
   restaurants = current_user.entries.where( category: Category.find_by(name: "Restaurant") ).map do |entry|
     restaurant = YelpAPI.find_restaurant_by_id(entry.provider_entry_id)
+    restaurant.created_at = entry.created_at
+    restaurant
   end
   restaurants.to_json
 end
@@ -107,7 +109,9 @@ end
 get '/user/movies' do
   puts "Retrieving list of movies for user #{current_user.id}"
   movies = current_user.entries.where( category: Category.find_by(name: "Movie") ).map do |entry|
-    restaurant = RottenTomatoesAPI.find_movie_by_id(entry.provider_entry_id)
+    movie = RottenTomatoesAPI.find_movie_by_id(entry.provider_entry_id)
+    movie.created_at = entry.created_at
+    movie
   end
   movies.to_json
 end

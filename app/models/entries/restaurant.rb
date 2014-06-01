@@ -11,6 +11,7 @@ class Restaurant
   attr_reader :review_count
   attr_reader :url
   attr_reader :photo_url
+  attr_accessor :created_at
 
   def initialize(args)
     @id = args[:id]
@@ -24,6 +25,7 @@ class Restaurant
     @review_count = args[:review_count]
     @url = args[:url]
     @photo_url = args[:photo_url]
+    @created_at = args[:created_at]
   end
 
   def to_s

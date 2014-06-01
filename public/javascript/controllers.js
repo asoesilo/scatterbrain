@@ -102,6 +102,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       console.log("Attempt to add new movie: " + movie_id);
       var movie = new UserMovies({rotten_tomatoes_movie_id: movie_id});
       movie.$save(function(){
+        $scope.movies[movie_index].created_at = Date.now();
         $scope.addMovie($scope.movies[movie_index]);
         $scope.movies.splice(movie_index, 1);
       });
@@ -112,6 +113,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       console.log("Attempt to add new restaurant: " + restaurant_id);
       var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
       restaurant.$save(function(){
+        $scope.restaurants[restaurant_index].created_at = Date.now();
         $scope.addRestaurant($scope.restaurants[restaurant_index]);
         $scope.restaurants.splice(restaurant_index, 1);
       });

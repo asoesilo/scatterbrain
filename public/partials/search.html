@@ -101,7 +101,7 @@
     <label>Where to eat?</label>
     <section class="userRestaurants">
       <ul>
-        <li ng-repeat="restaurant in userRestaurants track by $index">
+        <li ng-repeat="restaurant in userRestaurants | orderBy:'created_at':true">
           <h4>
             {{restaurant.name}}
           </h4>
@@ -121,7 +121,7 @@
     <label>What to watch?</label>
     <section class="userMovies">
       <ul>
-        <li ng-repeat="movie in userMovies track by $index">
+        <li ng-repeat="movie in userMovies | orderBy:'created_at':true">
           <h4>
             {{movie.title}} <span ng-show="movie.year">({{movie.year}})</span>
           </h4>

@@ -13,6 +13,7 @@ class Movie
   # attr_reader :director
   # attr_reader :cast
   attr_reader :url
+  attr_accessor :created_at
 
   def initialize(args)
     @id = args[:id]
@@ -28,5 +29,6 @@ class Movie
     # @director = args[:director]
     # @cast = args[:cast]
     @url = args[:url]
+    @created_at = args[:created_at]
   end
 end
