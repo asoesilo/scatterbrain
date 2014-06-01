@@ -17,7 +17,7 @@ class YelpAPI
         )
 
       businesses = client.search(request)
-      businesses = businesses["businesses"].map { |business| parse_result(business) }
+      businesses = businesses["businesses"].map { |business| parse_result(business) }.select { |business| StringMatcher.is_acceptable_distance(keyword, business.name) }
       businesses.sort_by! { |business| -StringMatcher.getDistance(keyword, business.name) }.first(limit)
     end
 

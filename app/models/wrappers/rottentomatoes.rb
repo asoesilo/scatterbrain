@@ -12,7 +12,7 @@ class RottenTomatoesAPI
       if(!movies.is_a?(Array))
         movies = [movies]
       end
-      movies = movies.map { |movie| parse_result(movie) }
+      movies = movies.map { |movie| parse_result(movie) }.select { |movie| StringMatcher.is_acceptable_distance(keyword, movie.title) }
       movies.sort_by! { |movie| -StringMatcher.getDistance(keyword, movie.title) }
     end
 
