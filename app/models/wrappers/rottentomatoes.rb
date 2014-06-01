@@ -26,7 +26,7 @@ class RottenTomatoesAPI
       length = movie.runtime
       critics_rating = movie.ratings.critics_score
       audience_rating = movie.ratings.audience_score
-      photo_url = movie.posters.profile
+      photo_url = movie.posters.detailed
       # director = 
       # cast = 
       url = movie.links.alternate
@@ -62,7 +62,7 @@ class RottenTomatoesAPI
       length = movie[:runtime]
       critics_rating = movie[:ratings].critics_score
       audience_rating = movie[:ratings].audience_score
-      photo_url = movie[:posters].profile
+      photo_url = movie[:posters].detailed
       # director = 
       # cast = 
       url = movie[:links].alternate

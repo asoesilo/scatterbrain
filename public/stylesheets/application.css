@@ -1,3 +1,173 @@
 .custom-btn-cat-width {
   width: 92px;
 }
+
+.custom-home-movie-panel {
+  /*
+  width: 250px;
+  */
+  width: 100%;
+
+  background-color: #83B6BF;
+  background-size: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.tile-buffer {
+  margin-top: 50px;
+}
+
+.tile-centered{
+  margin: 0 auto;
+}
+
+/* Colour Scheme http://design-seeds.com/index.php/home/entry/creature-tones1 */
+
+/* Bar Tiles http://bootsnipp.com/snippets/featured/progress-bar-tiles */
+.tile-body {
+  padding: 1em;
+}
+
+.tile-progress {
+  /*  
+  background-color: #303641;
+  */
+}
+
+.tile-progress {
+  background-color: white;
+  color: #fff;
+  /*
+  background: #00a65b;
+  color: #fff;
+  */
+  height: 500px;
+  padding: 10px;
+  margin-bottom: 20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#tile-custom-height {
+  height: 440px;
+}
+
+.tiles-progress .tile-header {
+  padding: 15px 20px;
+  padding-bottom: 40px;
+}
+
+.tile-progress .tile-progressbar {
+  height: 2px;
+  background: rgba(0,0,0,0.18);
+  margin: 0;
+}
+
+.tile-progress .tile-progressbar span {
+  background: #fff;
+}
+
+.tile-progress .tile-progressbar span {
+  display: block;
+  background: #fff;
+  width: 0;
+  height: 100%;
+  -webkit-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+  -moz-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+  -o-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+  transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+}
+
+.tile-progress .tile-footer {
+  padding: 20px;
+  text-align: right;
+  background: rgba(0,0,0,0.1);
+  -webkit-border-radius: 0 0 3px 3px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 0 0 3px 3px;
+  -moz-background-clip: padding;
+  border-radius: 0 0 3px 3px;
+  background-clip: padding-box;
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+}
+
+.tile-progress.tile-red {
+  background-color: #f56954;
+  color: #fff;
+}
+
+.tile-progress {
+  /*
+  background-color: #303641;
+  */
+  /*
+  background-color: white;
+  color: #fff;
+  */
+}
+
+.tile-progress.tile-blue {
+  background-color: #0073b7;
+  color: #fff;
+}
+
+.tile-progress.tile-aqua {
+  background-color: #00c0ef;
+  color: #fff;
+}
+
+.tile-progress.tile-green {
+  background-color: #00a65a;
+  color: #fff;
+}
+
+.tile-progress.tile-cyan {
+  background-color: #00b29e;
+  color: #fff;
+}
+
+.tile-progress.tile-purple {
+  background-color: #ba79cb;
+  color: #fff;
+}
+
+.tile-progress.tile-pink {
+  background-color: #ec3b83;
+  color: #fff;
+}
+
+.tile-progress.tile-movies {
+  background-color: #627a94;
+  /*
+  background-color: #fcf8f2;
+  */
+  color: blue;
+}
+
+.tile-progress.tile-restaurants {
+  background-color: #bda85a;
+}
+
+.tile-background {
+  /*
+  background-color: #f8f8f8;
+  */
+  background-color: #b5c9c6;
+  border-color: #e7e7e7;
+}
+
+.tile-header a:link {color: white;}      /* unvisited link */
+.tile-header a:visited {color: white;}  /* visited link */
+.tile-header a:hover {color: white;}  /* mouse over link */
+.tile-header a:active {color: white;}  /* selected link */
+
