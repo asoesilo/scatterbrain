@@ -79,6 +79,19 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
       restaurant.$save();
     };
+
+    $scope.refreshUserRestaurants = function refreshUserRestaurants() {
+      console.log("Refreshing list of restaurants for current users");
+      $scope.userRestaurants = UserRestaurants.query();
+    };
+
+    $scope.refreshUserMovies = function refreshUserMovies() {
+      console.log("Refreshing list of movies for current users");
+      $scope.userMovies = UserMovies.query();
+    };
+
+    $scope.refreshUserRestaurants();
+    $scope.refreshUserMovies();
   }]);
 
 scatterBrainControllers.controller('RestaurantDetailCtrl', ['$scope', '$routeParams', 'UserRestaurants', 'SharedValues',
