@@ -6,7 +6,7 @@ class RottenTomatoesAPI
     include RottenTomatoes
 
     
-    def find_movie(keyword, limit = 5)
+    def find_movie(keyword, limit = 4)
       create_new_client
       movies = RottenMovie.find(title: keyword, limit: limit)
       if(!movies.is_a?(Array))
