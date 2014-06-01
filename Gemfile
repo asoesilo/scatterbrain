@@ -12,6 +12,7 @@ gem 'sinatra-activerecord'
 
 gem 'puma'
 gem 'tux'
+gem 'thin'
 
 gem 'yelpster'        # Gem for yelp
 

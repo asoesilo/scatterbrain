@@ -97,6 +97,7 @@ post '/user/movies' do
 end
 
 get '/user/restaurants' do
+  puts "Retrieving list of restaurants for user #{current_user.id}"
   restaurants = current_user.entries.where( category: Category.find_by(name: "Restaurant") ).map do |entry|
     restaurant = YelpAPI.find_restaurant_by_id(entry.provider_entry_id)
   end
@@ -104,6 +105,7 @@ get '/user/restaurants' do
 end
 
 get '/user/movies' do
+  puts "Retrieving list of movies for user #{current_user.id}"
   movies = current_user.entries.where( category: Category.find_by(name: "Movie") ).map do |entry|
     restaurant = RottenTomatoesAPI.find_movie_by_id(entry.provider_entry_id)
   end

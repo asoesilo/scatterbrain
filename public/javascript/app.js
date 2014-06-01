@@ -11,7 +11,7 @@ var scatterBrainApp = angular.module('scatterBrainApp', [
 scatterBrainApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/search', {
+      when('/index', {
         templateUrl: '/partials/search.html',
         controller: 'SearchCtrl'
       }).
@@ -24,7 +24,7 @@ scatterBrainApp.config(['$routeProvider',
         controller: 'MovieDetailCtrl'
       }).
       otherwise({
-        redirectTo: '/search'
+        redirectTo: '/index'
       });
   }]);
 

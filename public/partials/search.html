@@ -39,11 +39,7 @@
       </div>
     </div>
   </form>
-  
-  <!-- 
-  <h3>{{keyword}}</h3>
-  -->
-  
+    
   <div ng-show="restaurants.length">
     <div class="container-fluid">
       <div class="row tile-background">
@@ -97,6 +93,50 @@
         </div>
       </div>            
     </div>    
+  </div>
+
+  <div ng-show="userRestaurants.length">
+    <label>Where to eat?</label>
+    <section class="userRestaurants">
+      <ul>
+        <li ng-repeat="restaurant in userRestaurants">
+          <h4>
+            {{restaurant.name}}
+          </h4>
+          <p>
+            <div>Address: {{restaurant.address}}</div><br>
+            <div>Phone: {{restaurant.phone}}</div><br>
+            <div>Rating: {{restaurant.rating}} ({{restaurant.review_count}} reviews)</div><br>
+            <div>Link: <a ng-href="{{restaurant.url}}" target="_blank">More information</a></div><br>
+          </p>
+          <img ng-src="{{restaurant.photo_url}}">
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <div ng-show="userMovies.length">
+    <label>What to watch?</label>
+    <section class="userMovies">
+      <ul>
+        <li ng-repeat="movie in userMovies">
+          <h4>
+            {{movie.title}} <span ng-show="movie.year">({{movie.year}})</span>
+          </h4>
+          <p>
+            <div>Summary: {{movie.summary}}</div><br>
+            <div>Runtime: {{movie.runtime}}</div><br>
+            <div>Theatre release date: {{movie.theater_release_date}}</div><br>
+            <div>DVD release date: {{movie.dvd_release_date}}</div><br>
+            <div>Audience rating: {{movie.audience_rating}}</div><br>
+            <div>Critics rating: {{movie.critics_rating}}</div><br>
+            <div>Rating: {{movie.rating}} ({{movie.review_count}} reviews)</div><br>
+            <div>Link: <a ng-href="{{movie.url}}" target="_blank">More information</a></div><br>
+          </p>
+          <img ng-src="{{movie.photo_url}}">
+        </li>
+      </ul>
+    </section>
   </div>
 
 </div>
