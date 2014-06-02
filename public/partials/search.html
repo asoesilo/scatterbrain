@@ -141,8 +141,6 @@
     </section>
   </div>
 
-  <!-- BEGIN -->
-
   <div ng-show="userMovies.length" class="container-fluid">
     <h2><label>What to watch?</label></h2>
     <section class="userMovies">
@@ -165,7 +163,7 @@
                 <div class="tile-header">
                   <center>
                     <h3 id="movie-history-height"><a href="#/movie/{{$index}}">{{movie.title}}<span ng-show="movie.year">({{movie.year}})</span></a></h3>
-                    <p><a href="#/movie/{{$index}}"><img ng-src="{{movie.photo_url}}" class="img-responsive" height="180px" width="180px"></a></p>                
+                    <p><a href="#/movie/{{$index}}"><img ng-src="{{movie.photo_url}}" class="img-responsive movie-details-image"></a></p>                
                     <p><strong>Theatre release date:</strong> {{movie.theater_release_date}}</p>
                     <p><strong>DVD release date:</strong> {{movie.dvd_release_date}}</p>
                     <p><strong>Audience rating:</strong> {{movie.audience_rating}}</p>
@@ -192,81 +190,110 @@
     </section>
   </div>
 
-  <!-- END -->
-
-  <!--
-  <div ng-show="userMovies.length">
-    <label>What to watch?</label>
-    <section class="userMovies">
-      <ul>
-        <li ng-repeat="movie in userMovies | orderBy:'created_at':true" ng-show="isMovieInScope($index)">
-          <h4>
-            {{movie.title}} <span ng-show="movie.year">({{movie.year}})</span>
-          </h4>
-          <p>
-            <div>Summary: {{movie.summary}}</div><br>
-            <div>Runtime: {{movie.runtime}}</div><br>
-            <div>Theatre release date: {{movie.theater_release_date}}</div><br>
-            <div>DVD release date: {{movie.dvd_release_date}}</div><br>
-            <div>Audience rating: {{movie.audience_rating}}</div><br>
-            <div>Critics rating: {{movie.critics_rating}}</div><br>
-            <div>Rating: {{movie.rating}} ({{movie.review_count}} reviews)</div><br>
-            <div>Link: <a ng-href="{{movie.url}}" target="_blank">More information</a></div><br>
-          </p>
-          <img ng-src="{{movie.photo_url}}">
-        </li>
-      </ul>
-    </section>
-    <button class="btn btn-default" ng-click="decrementUserMovieIndex()">
-      Previous
-    </button>
-    <button class="btn btn-default" ng-click="incrementUserMovieIndex()">
-      Next
-    </button>
-  </div>
-  -->
-
   <script type="text/ng-template" id="restaurant-detail.html">
     <div class="modal-header">
-        <h3 class="modal-title">{{restaurant.name}}</h3>
+        <h3 class="modal-title text-center">{{restaurant.name}}</h3>
     </div>
     <div class="modal-body">
-      <p>
-        <div>Address: {{restaurant.address}}</div><br>
-        <div>Phone: {{restaurant.phone}}</div><br>
-        <div>Rating: {{restaurant.rating}} ({{restaurant.review_count}} reviews)</div><br>
-        <div>Link: <a ng-href="{{restaurant.url}}" target="_blank">More information</a></div><br>
-      </p>
-      <img ng-src="{{restaurant.photo_url}}">
-      <button ng-click="showPreviousRestaurant()">Previous</button>
-      <button ng-click="showNextRestaurant()">Next</button>
+      <div class="row well-without-color">
+        <div class="col-xs-1 restaurant-navigation-height vertical-center well navigation" ng-click="showPreviousRestaurant()">
+          <div>
+            <div>
+              <a ng-click="showPreviousrestaurant()">
+                <span class="content-clickable">
+                  <span class="fa fa-arrow-left fa-2x"></span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-10">
+          <div class="row">
+            <div class="col-sm-12 tile-centered row">
+              <div class="tile-progress tile-restaurants" id="tile-history-restaurant-height">
+                <div class="tile-header">
+                  <center>
+                    <p><a href="#/restaurant/{{$index}}"><img ng-src="{{restaurant.photo_url}}" class="img-responsive" height="300px" width="300px"></a></p>
+                    <p><strong>Address:</strong> {{restaurant.address}}</p>
+                    <p><strong>Phone:</strong> {{restaurant.phone}}</p>                
+                    <p><strong>Rating:</strong> {{restaurant.rating}} ({{restaurant.review_count}} reviews)</p>
+                  </center>
+                </div>
+              </div>
+            </div>
+          </div>            
+        </div>
+        <div class="col-xs-1 restaurant-navigation-height vertical-center well navigation" ng-click="showNextRestaurant()">
+          <div>
+            <div>
+              <a ng-click="showNextRestaurant()">
+                <span class="content-clickable">
+                  <span class="fa fa-arrow-right fa-2x"></span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="close()">Close</button>
+        <button class="btn btn-default" ng-click="close()">Close</button>
+        <a ng-href="{{restaurant.url}}" target="_blank" class="btn btn-primary">More Information</a>
     </div>
   </script>
 
   <script type="text/ng-template" id="movie-detail.html">
     <div class="modal-header">
-        <h3 class="modal-title">{{movie.title}}</h3>
+      <h3 class="modal-title text-center">{{movie.title}} <span ng-show="movie.year">({{movie.year}})</span></h3>
     </div>
     <div class="modal-body">
-      <p>
-        <div>Summary: {{movie.summary}}</div><br>
-        <div>Runtime: {{movie.runtime}}</div><br>
-        <div>Theatre release date: {{movie.theater_release_date}}</div><br>
-        <div>DVD release date: {{movie.dvd_release_date}}</div><br>
-        <div>Audience rating: {{movie.audience_rating}}</div><br>
-        <div>Critics rating: {{movie.critics_rating}}</div><br>
-        <div>Rating: {{movie.rating}} ({{movie.review_count}} reviews)</div><br>
-        <div>Link: <a ng-href="{{movie.url}}" target="_blank">More information</a></div><br>
-      </p>
-      <img ng-src="{{movie.photo_url}}">
-      <button ng-click="showPreviousRestaurant()">Previous</button>
-      <button ng-click="showNextRestaurant()">Next</button>
+      <div class="row well-without-color">
+        <div class="col-xs-1 movie-navigation-height vertical-center well navigation" ng-click="showPreviousMovie()">
+          <div>
+            <div>
+              <a ng-click="showPreviousMovie()">
+                <span class="content-clickable">
+                  <span class="fa fa-arrow-left fa-2x"></span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-10">
+          <div class="row">
+            <div class="col-sm-12 tile-centered row">
+              <div class="tile-progress tile-movies" id="tile-history-movie-height">
+                <div class="tile-header">
+                  <center>
+                    <p><a href="#/movie/{{$index}}"><img ng-src="{{movie.photo_url}}" class="img-responsive"></a></p>
+                    <p><strong>Summary:</strong> {{movie.summary}}</p>
+                    <p><strong>Runtime:</strong> {{movie.runtime}}</p>                
+                    <p><strong>Theatre release date:</strong> {{movie.theater_release_date}}</p>
+                    <p><strong>DVD release date:</strong> {{movie.dvd_release_date}}</p>
+                    <p><strong>Audience rating:</strong> {{movie.audience_rating}}</p>
+                    <p><strong>Critics rating:</strong> {{movie.audience_rating}}</p>
+                  </center>
+                </div>
+              </div>
+            </div>
+          </div>            
+        </div>
+        <div class="col-xs-1 movie-navigation-height vertical-center well navigation" ng-click="showNextMovie()">
+          <div>
+            <div>
+              <a ng-click="showNextMovie()">
+                <span class="content-clickable">
+                  <span class="fa fa-arrow-right fa-2x"></span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="close()">Close</button>
+      <button class="btn btn-default" ng-click="close()">Close</button>
+      <a ng-href="{{movie.url}}" target="_blank" class="btn btn-primary">More Information</a>
     </div>
   </script>
 </div>

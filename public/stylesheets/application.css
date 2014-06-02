@@ -184,3 +184,13 @@
   position: relative;
   top: -50%;
 }
+
+.movie-details-image {
+  width: 360px;
+  height: 100%;
+}
+
+.white-color a:link {color: white;}    
+.white-color a:visited {color: white;} 
+.white-color a:hover {color: white;}  
+.white-color a:active {color: white;} 
