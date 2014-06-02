@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'ui.bootstrap', 'scatterBrainAppServices']);
+var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'ui.bootstrap', 'cgBusy', 'scatterBrainAppServices']);
 
 scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal', 'UserMovies', 'UserRestaurants', 'SharedValues',
   function($scope, $resource, $modal, UserMovies, UserRestaurants, SharedValues){
@@ -80,8 +80,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       console.log("in searchEntry");
       switch($scope.category) {
         case 'restaurant':
-          $scope.message = "Searching for restaurants with '" + $scope.keyword + "' ...";
-          restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548})
+          $scope.message = "";
+          $scope.searchPromiseMessage = "Searching for restaurants with '" + $scope.keyword + "'";
+          $scope.searchPromise = restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548})
             .$promise.then(
               function(newRestaurants) {
                 if(newRestaurants.length > 0)
@@ -97,8 +98,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
             );
           break;
         case 'movie':
-          $scope.message = "Searching for movies with '" + $scope.keyword + "' ...";
-          moviesSearchResource.get({keyword: $scope.keyword})
+          $scope.message = "";
+          $scope.searchPromiseMessage = "Searching for movies with '" + $scope.keyword + "'";
+          $scope.searchPromise = moviesSearchResource.get({keyword: $scope.keyword})
             .$promise.then(
               function(newMovies) {
                 if(newMovies.length > 0)
@@ -164,12 +166,19 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
 
     $scope.refreshUserRestaurants = function refreshUserRestaurants() {
       console.log("Refreshing list of restaurants for current users");
-      $scope.userRestaurants = UserRestaurants.query();
+      $scope.retrieveRestaurantsPromiseMessage = "Please wait while we retrieve your restaurant list";
+      $scope.retrieveRestaurantsPromise = UserRestaurants.query()
+        .$promise.then(
+          function(userRestaurants) {
+            $scope.userRestaurants = userRestaurants;
+          }
+        );
     };
 
     $scope.refreshUserMovies = function refreshUserMovies() {
       console.log("Refreshing list of movies for current users");
-      UserMovies.query()
+      $scope.retrieveMoviesPromiseMessage = "Please wait while we retrieve your movie list";
+      $scope.retrieveMoviesPromise = UserMovies.query()
         .$promise.then(
           function(userMovies) {
             $scope.userMovies = userMovies;

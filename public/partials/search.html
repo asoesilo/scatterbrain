@@ -37,7 +37,7 @@
     </form>
   </div>
 
-  <div class="container">
+  <div class="container" cg-busy="{promise:searchPromise,message:searchPromiseMessage}">
     <h2>{{message}}</h2>
   </div>
     
@@ -93,6 +93,10 @@
     </div>    
   </div>
 
+  <div ng-hide="userRestaurants.length" class="container" cg-busy="{promise:retrieveRestaurantsPromise,message:retrieveRestaurantsPromiseMessage}">
+    <br><br><br>
+  </div>
+
   <div ng-show="userRestaurants.length" class="container-fluid">
     <h2><label>Where to eat?</label></h2>
     <section class="userRestaurants">
@@ -142,6 +146,9 @@
   </div>
 
   <!-- BEGIN -->
+  <div ng-hide="userMovies.length" class="container" cg-busy="{promise:retrieveMoviesPromise,message:retrieveMoviesPromiseMessage}">
+    <br><br><br>
+  </div>
 
   <div ng-show="userMovies.length" class="container-fluid">
     <h2><label>What to watch?</label></h2>
