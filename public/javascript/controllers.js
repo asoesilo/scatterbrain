@@ -9,6 +9,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
     $scope.movies = SharedValues.getMovies();
     $scope.restaurants = SharedValues.getRestaurants();
     $scope.message = "";
+    $scope.numUserItemsToShow = 4;
+    $scope.start_restaurant_index = 0;
+    $scope.start_movie_index = 0;
 
     var restaurantsSearchResource = $resource("/restaurants", {},{ get: {method: 'get', isArray:true}});
     var moviesSearchResource = $resource("/movies", {},{ get: {method: 'get', isArray:true}});
@@ -21,6 +24,8 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
             if($scope.isLoggedIn)
             {
               console.log("Logged in");
+              $scope.refreshUserRestaurants();
+              $scope.refreshUserMovies();
             }
             else
             {
@@ -139,8 +144,41 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
       $scope.userMovies = UserMovies.query();
     };
 
-    $scope.refreshUserRestaurants();
-    $scope.refreshUserMovies();
+    $scope.incrementUserRestaurantIndex = function incrementUserRestaurantIndex() {
+      if(($scope.start_restaurant_index + $scope.numUserItemsToShow) < $scope.userRestaurants.length)
+      {
+        $scope.start_restaurant_index++; 
+      }
+    };
+
+    $scope.decrementUserRestaurantIndex = function decrementUserRestaurantIndex() {
+      if($scope.start_restaurant_index > 0)
+      {
+        $scope.start_restaurant_index--;
+      }
+    };
+
+    $scope.incrementUserMovieIndex = function incrementUserMovieIndex() {
+      if(($scope.start_movie_index + $scope.numUserItemsToShow) < $scope.userMovies.length)
+      {
+        $scope.start_movie_index++; 
+      }
+    };
+
+    $scope.decrementUserMovieIndex = function decrementUserMovieIndex() {
+      if($scope.start_movie_index > 0)
+      {
+        $scope.start_movie_index--;
+      }
+    };
+
+    $scope.isRestaurantInScope = function isRestaurantInScope(index) {
+      return (index >= $scope.start_restaurant_index) && (index < $scope.start_restaurant_index + $scope.numUserItemsToShow);
+    };
+
+    $scope.isMovieInScope = function isMovieInScope(index) {
+      return (index >= $scope.start_movie_index) && (index < $scope.start_movie_index + $scope.numUserItemsToShow);
+    };
   }]);
 
 scatterBrainControllers.controller('RestaurantDetailCtrl', ['$scope', '$routeParams', 'UserRestaurants', 'SharedValues',

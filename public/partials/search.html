@@ -101,7 +101,7 @@
     <label>Where to eat?</label>
     <section class="userRestaurants">
       <ul>
-        <li ng-repeat="restaurant in userRestaurants | orderBy:'created_at':true">
+        <li ng-repeat="restaurant in userRestaurants | orderBy:'created_at':true" ng-show="isRestaurantInScope($index)">
           <h4>
             {{restaurant.name}}
           </h4>
@@ -115,13 +115,19 @@
         </li>
       </ul>
     </section>
+    <button class="btn btn-default" ng-click="decrementUserRestaurantIndex()">
+      Previous
+    </button>
+    <button class="btn btn-default" ng-click="incrementUserRestaurantIndex()">
+      Next
+    </button>
   </div>
 
   <div ng-show="userMovies.length">
     <label>What to watch?</label>
     <section class="userMovies">
       <ul>
-        <li ng-repeat="movie in userMovies | orderBy:'created_at':true">
+        <li ng-repeat="movie in userMovies | orderBy:'created_at':true" ng-show="isMovieInScope($index)">
           <h4>
             {{movie.title}} <span ng-show="movie.year">({{movie.year}})</span>
           </h4>
@@ -139,6 +145,12 @@
         </li>
       </ul>
     </section>
+    <button class="btn btn-default" ng-click="decrementUserMovieIndex()">
+      Previous
+    </button>
+    <button class="btn btn-default" ng-click="incrementUserMovieIndex()">
+      Next
+    </button>
   </div>
 
 </div>
