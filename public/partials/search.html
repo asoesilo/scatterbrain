@@ -59,9 +59,7 @@
                 <br>{{restaurant.address}}, {{restaurant.city}}
                 <br>{{restaurant.phone}}
                 <br><br>
-                <button type="button" class="btn btn-default" ng-click="addRestaurantToList($index)">
-                  <span class="fa fa-plus fa-2x"> Add<span>
-                </button>
+                <a ng-click="addRestaurantToList($index)" class="btn btn-primary"><span class="fa fa-plus"><span> Add</a>
               </center>
             </div>
           </div>
@@ -85,10 +83,8 @@
                 <a ng-click="showMovieDetail($index)">
                   <img ng-src="{{movie.photo_url}}" class="img-responsive">
                 </a>
-                <br>
-                <button type="button" class="btn btn-default" ng-click="addMovieToList($index)">
-                  <span class="fa fa-plus fa-2x"> Add<span>
-                </button>
+                <br><br>
+                <a ng-click="addMovieToList($index)" class="btn btn-primary"><span class="fa fa-plus"><span> Add</a>
               </center>
             </div>
           </div>
