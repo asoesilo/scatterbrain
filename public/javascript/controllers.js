@@ -127,11 +127,13 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
     $scope.addRestaurant = function addRestaurant(restaurant) {
       console.log("Add restaurant to user's restaurant list: " + restaurant.id);
       $scope.userRestaurants.push(restaurant);
+      $scope.start_restaurant_index = 0;
     };
 
     $scope.addMovie = function addMovie(movie) {
       console.log("Add movie to user's movie list: " + movie.id);
       $scope.userMovies.push(movie);
+      $scope.start_movie_index = 0;
     };
 
     $scope.refreshUserRestaurants = function refreshUserRestaurants() {
