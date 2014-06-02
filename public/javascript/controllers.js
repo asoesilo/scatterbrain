@@ -1,10 +1,10 @@
 'use strict';
 
 /* Controllers */
-var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'scatterBrainAppServices']);
+var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'ui.bootstrap', 'scatterBrainAppServices']);
 
-scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMovies', 'UserRestaurants', 'SharedValues',
-  function($scope, $resource, UserMovies, UserRestaurants, SharedValues){
+scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal', 'UserMovies', 'UserRestaurants', 'SharedValues',
+  function($scope, $resource, $modal, UserMovies, UserRestaurants, SharedValues){
     $scope.category = SharedValues.getCurrentCategory();
     $scope.movies = SharedValues.getMovies();
     $scope.restaurants = SharedValues.getRestaurants();
@@ -12,6 +12,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
     $scope.numUserItemsToShow = 4;
     $scope.start_restaurant_index = 0;
     $scope.start_movie_index = 0;
+    $scope.detail_restaurant = null;
 
     var restaurantsSearchResource = $resource("/restaurants", {},{ get: {method: 'get', isArray:true}});
     var moviesSearchResource = $resource("/movies", {},{ get: {method: 'get', isArray:true}});
@@ -179,13 +180,48 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', 'UserMo
     $scope.isMovieInScope = function isMovieInScope(index) {
       return (index >= $scope.start_movie_index) && (index < $scope.start_movie_index + $scope.numUserItemsToShow);
     };
+
+    $scope.showRestaurantDetail = function showRestaurantDetail(restaurant_index) {
+      console.log("Attempt to show modal for restaurant index: " + restaurant_index);
+      $scope.restaurant_index = restaurant_index;
+      $modal.open({
+        templateUrl: 'restaurant-detail.html',
+        controller: 'RestaurantDetailCtrl',
+        size: 'lg',
+        resolve: {
+          restaurant_index: function() {
+            return $scope.restaurant_index;
+          }
+        }
+      });
+    };
+
+    $scope.showMovieDetail = function showMovieDetail(movie_index) {
+      console.log("Attempt to show modal for movie index: " + movie_index);
+      $scope.movie_index = movie_index;
+      $modal.open({
+        templateUrl: 'movie-detail.html',
+        controller: 'MovieDetailCtrl',
+        size: 'lg',
+        resolve: {
+          movie_index: function() {
+            return $scope.movie_index;
+          }
+        }
+      });
+    };
   }]);
 
-scatterBrainControllers.controller('RestaurantDetailCtrl', ['$scope', '$routeParams', 'UserRestaurants', 'SharedValues',
-  function($scope, $routeParams, UserRestaurants, SharedValues){
+scatterBrainControllers.controller('RestaurantDetailCtrl', ['$scope', '$modalInstance', 'UserRestaurants', 'SharedValues', 'restaurant_index',
+  function($scope, $modalInstance, UserRestaurants, SharedValues, restaurant_index){
+    console.log("In restaurant detail controller");
+
     $scope.restaurants = SharedValues.getRestaurants();
-    $scope.restaurant_index = parseInt($routeParams.restaurant_index);
+    // $scope.restaurant_index = parseInt($routeParams.restaurant_index);
+    $scope.restaurant_index = restaurant_index;
     $scope.restaurant = $scope.restaurants[$scope.restaurant_index];
+
+    console.log("Showing information for restaurant index: " + restaurant_index);
 
     $scope.showNextRestaurant = function showNextRestaurant(){
       $scope.restaurant_index = ($scope.restaurant_index + 1) % $scope.restaurants.length;
@@ -202,13 +238,22 @@ scatterBrainControllers.controller('RestaurantDetailCtrl', ['$scope', '$routePar
       $scope.restaurant = $scope.restaurants[$scope.restaurant_index];
       console.log("Previous restaurant index: " + $scope.restaurant_index);
     };
+
+    $scope.close = function close(){
+      $modalInstance.dismiss();
+    };
 }]);
 
-scatterBrainControllers.controller('MovieDetailCtrl', ['$scope', '$routeParams', 'UserMovies', 'SharedValues',
-  function($scope, $routeParams, UserMovies, SharedValues){
+scatterBrainControllers.controller('MovieDetailCtrl', ['$scope', '$modalInstance', 'UserMovies', 'SharedValues', 'movie_index',
+  function($scope, $modalInstance, UserMovies, SharedValues, movie_index){
+    console.log("In movie detail controller");
+
     $scope.movies = SharedValues.getMovies();
-    $scope.movie_index = parseInt($routeParams.movie_index);
+    // $scope.movie_index = parseInt($routeParams.movie_index);
+    $scope.movie_index = movie_index;
     $scope.movie = $scope.movies[$scope.movie_index];
+
+    console.log("Showing information for movie index: " + movie_index);
 
     $scope.showNextMovie = function showNextMovie(){
       $scope.movie_index = ($scope.movie_index + 1) % $scope.movies.length;
@@ -224,6 +269,10 @@ scatterBrainControllers.controller('MovieDetailCtrl', ['$scope', '$routeParams',
       }
       $scope.movie = $scope.movies[$scope.movie_index];
       console.log("Previous movie index: " + $scope.movie_index);
+    };
+
+    $scope.close = function close(){
+      $modalInstance.dismiss();
     };
 }]);
 
