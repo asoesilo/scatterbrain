@@ -196,40 +196,6 @@
     </section>
   </div>
 
-  <!-- END -->
-
-  <!--
-  <div ng-show="userMovies.length">
-    <label>What to watch?</label>
-    <section class="userMovies">
-      <ul>
-        <li ng-repeat="movie in userMovies | orderBy:'created_at':true" ng-show="isMovieInScope($index)">
-          <h4>
-            {{movie.title}} <span ng-show="movie.year">({{movie.year}})</span>
-          </h4>
-          <p>
-            <div>Summary: {{movie.summary}}</div><br>
-            <div>Runtime: {{movie.runtime}}</div><br>
-            <div>Theatre release date: {{movie.theater_release_date}}</div><br>
-            <div>DVD release date: {{movie.dvd_release_date}}</div><br>
-            <div>Audience rating: {{movie.audience_rating}}</div><br>
-            <div>Critics rating: {{movie.critics_rating}}</div><br>
-            <div>Rating: {{movie.rating}} ({{movie.review_count}} reviews)</div><br>
-            <div>Link: <a ng-href="{{movie.url}}" target="_blank">More information</a></div><br>
-          </p>
-          <img ng-src="{{movie.photo_url}}">
-        </li>
-      </ul>
-    </section>
-    <button class="btn btn-default" ng-click="decrementUserMovieIndex()">
-      Previous
-    </button>
-    <button class="btn btn-default" ng-click="incrementUserMovieIndex()">
-      Next
-    </button>
-  </div>
-  -->
-
   <script type="text/ng-template" id="restaurant-detail.html">
     <div class="modal-header">
         <h3 class="modal-title">{{restaurant.name}}</h3>

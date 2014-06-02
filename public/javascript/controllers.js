@@ -48,6 +48,31 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       SharedValues.setRestaurants(newRestaurants);
     };
 
+    var getCurrentDate = function() {
+      var currentTime = new Date();
+      var year = (parseInt(currentTime.getFullYear()) + 1).toString();
+      var month = currentTime.getMonth();
+      if(month < 10)
+      {
+        month = "0" + month;
+      }
+      var date = currentTime.getDay();
+      if(date < 10)
+      {
+        date = "0" + date;
+      }
+      var hours = currentTime.getHours();
+      if(hours < 10) {
+        hours = "0" + hours;
+      }
+      var minutes = currentTime.getMinutes();
+      if(minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      var seconds = currentTime.getSeconds();
+      return year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds + "Z";
+    };
+
     $scope.searchEntry = function searchEntry() {
       setRestaurants([]);
       setMovies([]);
@@ -108,7 +133,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       console.log("Attempt to add new movie: " + movie_id);
       var movie = new UserMovies({rotten_tomatoes_movie_id: movie_id});
       movie.$save(function(){
-        $scope.movies[movie_index].created_at = Date.now();
+        $scope.movies[movie_index].created_at = getCurrentDate();
         $scope.addMovie($scope.movies[movie_index]);
         $scope.movies.splice(movie_index, 1);
       });
@@ -119,19 +144,19 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       console.log("Attempt to add new restaurant: " + restaurant_id);
       var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
       restaurant.$save(function(){
-        $scope.restaurants[restaurant_index].created_at = Date.now();
+        $scope.restaurants[restaurant_index].created_at = getCurrentDate();
         $scope.addRestaurant($scope.restaurants[restaurant_index]);
         $scope.restaurants.splice(restaurant_index, 1);
       });
     };
 
     $scope.addRestaurant = function addRestaurant(restaurant) {
-      console.log("Add restaurant to user's restaurant list: " + restaurant.id);
+      console.log("Add restaurant to user's restaurant list: " + restaurant.id + " with creation date " + restaurant.created_at);
       $scope.userRestaurants.push(restaurant);
     };
 
     $scope.addMovie = function addMovie(movie) {
-      console.log("Add movie to user's movie list: " + movie.id);
+      console.log("Add movie to user's movie list: " + movie.id + " with creation date " + movie.created_at);
       $scope.userMovies.push(movie);
     };
 
@@ -142,7 +167,12 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
 
     $scope.refreshUserMovies = function refreshUserMovies() {
       console.log("Refreshing list of movies for current users");
-      $scope.userMovies = UserMovies.query();
+      UserMovies.query()
+        .$promise.then(
+          function(userMovies) {
+            $scope.userMovies = userMovies;
+          }
+        );
     };
 
     $scope.incrementUserRestaurantIndex = function incrementUserRestaurantIndex() {
