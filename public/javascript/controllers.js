@@ -133,8 +133,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
     $scope.addMovieToList = function addMovieToList(movie_index){
       var movie_id = $scope.movies[movie_index].id;
       console.log("Attempt to add new movie: " + movie_id);
+      $scope.addMoviePromiseMessage = "Adding " + $scope.movies[movie_index].title + " to your list";
       var movie = new UserMovies({rotten_tomatoes_movie_id: movie_id});
-      movie.$save(function(){
+      $scope.addMoviePromise = movie.$save(function(){
         $scope.movies[movie_index].created_at = getCurrentDate();
         $scope.addMovie($scope.movies[movie_index]);
         $scope.movies.splice(movie_index, 1);
@@ -144,8 +145,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
     $scope.addRestaurantToList = function addRestaurantToList(restaurant_index){
       var restaurant_id = $scope.restaurants[restaurant_index].id;
       console.log("Attempt to add new restaurant: " + restaurant_id);
+      $scope.addRestaurantPromiseMessage = "Adding " + $scope.restaurants[restaurant_index].name + " to your list";
       var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
-      restaurant.$save(function(){
+      $scope.addRestaurantPromise = restaurant.$save(function(){
         $scope.restaurants[restaurant_index].created_at = getCurrentDate();
         $scope.addRestaurant($scope.restaurants[restaurant_index]);
         $scope.restaurants.splice(restaurant_index, 1);

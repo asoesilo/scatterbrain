@@ -45,7 +45,7 @@
     <h2>{{message}}</h2>
   </div>
     
-  <div ng-show="restaurants.length">
+  <div ng-show="restaurants.length" cg-busy="{promise:addRestaurantPromise,message:addRestaurantPromiseMessage}">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 tile-centered" ng-repeat="restaurant in restaurants track by $index">
@@ -72,7 +72,7 @@
     </div>    
   </div>
 
-  <div ng-show="movies.length">
+  <div ng-show="movies.length" cg-busy="{promise:addMoviePromise,message:addMoviePromiseMessage}">
     <div class="container-fluid">
       <div class="row title-background">
         <div class="col-sm-3 tile-centered" ng-repeat="movie in movies track by $index">
