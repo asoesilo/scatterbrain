@@ -53,7 +53,7 @@
 }
 
 #tile-history-movie-height {
-  height: 590px;
+  height: 620px;
 }
 
 .tiles-progress .tile-header {
@@ -157,11 +157,11 @@
 }
 
 #movie-history-height {
-  height:83px;
+  height:113px;
 }
 
 .movie-navigation-height {
-  height: 590px;
+  height: 620px;
   cursor: pointer;
 }
 
