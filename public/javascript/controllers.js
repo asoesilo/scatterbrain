@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'ui.bootstrap', 'scatterBrainAppServices']);
+var scatterBrainControllers = angular.module('scatterBrainControllers', ['ngResource', 'ui.bootstrap', 'cgBusy', 'scatterBrainAppServices']);
 
 scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal', 'UserMovies', 'UserRestaurants', 'SharedValues',
   function($scope, $resource, $modal, UserMovies, UserRestaurants, SharedValues){
@@ -48,6 +48,31 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       SharedValues.setRestaurants(newRestaurants);
     };
 
+    var getCurrentDate = function() {
+      var currentTime = new Date();
+      var year = (parseInt(currentTime.getFullYear()) + 1).toString();
+      var month = currentTime.getMonth();
+      if(month < 10)
+      {
+        month = "0" + month;
+      }
+      var date = currentTime.getDay();
+      if(date < 10)
+      {
+        date = "0" + date;
+      }
+      var hours = currentTime.getHours();
+      if(hours < 10) {
+        hours = "0" + hours;
+      }
+      var minutes = currentTime.getMinutes();
+      if(minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      var seconds = currentTime.getSeconds();
+      return year + "-" + month + "-" + date + "T" + hours + ":" + minutes + ":" + seconds + "Z";
+    };
+
     $scope.searchEntry = function searchEntry() {
       setRestaurants([]);
       setMovies([]);
@@ -55,8 +80,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       console.log("in searchEntry");
       switch($scope.category) {
         case 'restaurant':
-          $scope.message = "Searching for restaurants with '" + $scope.keyword + "' ...";
-          restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548})
+          $scope.message = "";
+          $scope.searchPromiseMessage = "Searching for restaurants with '" + $scope.keyword + "'";
+          $scope.searchPromise = restaurantsSearchResource.get({keyword: $scope.keyword, latitude: 49.285358, longitude: -123.114548})
             .$promise.then(
               function(newRestaurants) {
                 if(newRestaurants.length > 0)
@@ -72,8 +98,9 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
             );
           break;
         case 'movie':
-          $scope.message = "Searching for movies with '" + $scope.keyword + "' ...";
-          moviesSearchResource.get({keyword: $scope.keyword})
+          $scope.message = "";
+          $scope.searchPromiseMessage = "Searching for movies with '" + $scope.keyword + "'";
+          $scope.searchPromise = moviesSearchResource.get({keyword: $scope.keyword})
             .$promise.then(
               function(newMovies) {
                 if(newMovies.length > 0)
@@ -108,7 +135,7 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       console.log("Attempt to add new movie: " + movie_id);
       var movie = new UserMovies({rotten_tomatoes_movie_id: movie_id});
       movie.$save(function(){
-        $scope.movies[movie_index].created_at = Date.now();
+        $scope.movies[movie_index].created_at = getCurrentDate();
         $scope.addMovie($scope.movies[movie_index]);
         $scope.movies.splice(movie_index, 1);
       });
@@ -119,32 +146,44 @@ scatterBrainControllers.controller('SearchCtrl', ['$scope', '$resource', '$modal
       console.log("Attempt to add new restaurant: " + restaurant_id);
       var restaurant = new UserRestaurants({yelp_business_id: restaurant_id});
       restaurant.$save(function(){
-        $scope.restaurants[restaurant_index].created_at = Date.now();
+        $scope.restaurants[restaurant_index].created_at = getCurrentDate();
         $scope.addRestaurant($scope.restaurants[restaurant_index]);
         $scope.restaurants.splice(restaurant_index, 1);
       });
     };
 
     $scope.addRestaurant = function addRestaurant(restaurant) {
-      console.log("Add restaurant to user's restaurant list: " + restaurant.id);
+      console.log("Add restaurant to user's restaurant list: " + restaurant.id + " with creation date " + restaurant.created_at);
       $scope.userRestaurants.push(restaurant);
       $scope.start_restaurant_index = 0;
     };
 
     $scope.addMovie = function addMovie(movie) {
-      console.log("Add movie to user's movie list: " + movie.id);
+      console.log("Add movie to user's movie list: " + movie.id + " with creation date " + movie.created_at);
       $scope.userMovies.push(movie);
       $scope.start_movie_index = 0;
     };
 
     $scope.refreshUserRestaurants = function refreshUserRestaurants() {
       console.log("Refreshing list of restaurants for current users");
-      $scope.userRestaurants = UserRestaurants.query();
+      $scope.retrieveRestaurantsPromiseMessage = "Please wait while we retrieve your restaurant list";
+      $scope.retrieveRestaurantsPromise = UserRestaurants.query()
+        .$promise.then(
+          function(userRestaurants) {
+            $scope.userRestaurants = userRestaurants;
+          }
+        );
     };
 
     $scope.refreshUserMovies = function refreshUserMovies() {
       console.log("Refreshing list of movies for current users");
-      $scope.userMovies = UserMovies.query();
+      $scope.retrieveMoviesPromiseMessage = "Please wait while we retrieve your movie list";
+      $scope.retrieveMoviesPromise = UserMovies.query()
+        .$promise.then(
+          function(userMovies) {
+            $scope.userMovies = userMovies;
+          }
+        );
     };
 
     $scope.incrementUserRestaurantIndex = function incrementUserRestaurantIndex() {

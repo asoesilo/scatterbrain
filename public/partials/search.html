@@ -1,28 +1,28 @@
 <div ng-controller="SearchCtrl">
 
   <div class="container">
+    <div class="row">
+      <div class="btn-group col-xs-offset-1 col-xs-11 col-sm-offset-4 col-sm-8 col-md-offset-5 col-md-7" data-toggle="buttons">
+        <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('movie')}" ng-click="selectTab('movie')">
+          <input type="radio">
+          <span class="fa fa-film fa-4x" id="category_movie" name="options"></span> 
+          <br>Movie
+        </button>
+        <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('restaurant')}" ng-click="selectTab('restaurant')">
+          <input type="radio">
+          <span class="fa fa-cutlery fa-4x" id="category_restaurant" name="options"></span> 
+          <br>Restaurant
+        </button>
+        <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('other')}" ng-click="selectTab('other')">
+          <input type="radio">
+          <span class="fa fa-question fa-4x" id="category_other" name="options"></span> 
+          <br>Other
+        </button>
+      </div>
+    </div>
+    <br>
     <form role="form" ng-submit="searchEntry()">
       <div class="form-group">
-        <div class="row">
-          <div class="btn-group col-xs-offset-1 col-xs-11 col-sm-offset-4 col-sm-8 col-md-offset-5 col-md-7" data-toggle="buttons">
-            <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('movie')}" ng-click="selectTab('movie')">
-              <input type="radio">
-              <span class="fa fa-film fa-4x" id="category_movie" name="options"></span> 
-              <br>Movie
-            </button>
-            <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('restaurant')}" ng-click="selectTab('restaurant')">
-              <input type="radio">
-              <span class="fa fa-cutlery fa-4x" id="category_restaurant" name="options"></span> 
-              <br>Restaurant
-            </button>
-            <button class="btn btn-default custom-btn-cat-width" ng-class="{active: isSelected('other')}" ng-click="selectTab('other')">
-              <input type="radio">
-              <span class="fa fa-question fa-4x" id="category_other" name="options"></span> 
-              <br>Other
-            </button>
-          </div>
-        </div>
-        <br>
         <div class="row">  
           <div class="col-xs-offset-1 col-xs-8 col-sm-offset-1 col-sm-9 col-md-offset-1 col-md-10">
             <input type="text" class="form-control input-lg" placeholder="Type your note" autofocus="" ng-model="keyword">
@@ -37,7 +37,7 @@
     </form>
   </div>
 
-  <div class="container">
+  <div class="container" cg-busy="{promise:searchPromise,message:searchPromiseMessage}">
     <h2>{{message}}</h2>
   </div>
     
@@ -93,6 +93,10 @@
     </div>    
   </div>
 
+  <div ng-hide="userRestaurants.length" class="container" cg-busy="{promise:retrieveRestaurantsPromise,message:retrieveRestaurantsPromiseMessage}">
+    <br><br><br>
+  </div>
+
   <div ng-show="userRestaurants.length" class="container-fluid">
     <h2><label>Where to eat?</label></h2>
     <section class="userRestaurants">
@@ -139,6 +143,10 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <div ng-hide="userMovies.length" class="container" cg-busy="{promise:retrieveMoviesPromise,message:retrieveMoviesPromiseMessage}">
+    <br><br><br>
   </div>
 
   <div ng-show="userMovies.length" class="container-fluid">
