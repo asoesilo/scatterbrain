@@ -46,14 +46,14 @@
   padding: 10px;
   margin-bottom: 20px;
   -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
   -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
-  background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
   -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
 }
 
 #tile-custom-height {
@@ -81,9 +81,9 @@
   width: 0;
   height: 100%;
   -webkit-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
-  -moz-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
-  -o-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
-  transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+     -moz-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+       -o-transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
+          transition: all 1.5s cubic-bezier(0.230,1.000,0.320,1.000);
 }
 
 .tile-progress .tile-footer {
@@ -91,14 +91,14 @@
   text-align: right;
   background: rgba(0,0,0,0.1);
   -webkit-border-radius: 0 0 3px 3px;
+     -moz-border-radius: 0 0 3px 3px;
+          border-radius: 0 0 3px 3px;
   -webkit-background-clip: padding-box;
-  -moz-border-radius: 0 0 3px 3px;
-  -moz-background-clip: padding;
-  border-radius: 0 0 3px 3px;
-  background-clip: padding-box;
+     -moz-background-clip: padding;
+          background-clip: padding-box;
   -webkit-border-radius: 0 0 3px 3px;
-  -moz-border-radius: 0 0 3px 3px;
-  border-radius: 0 0 3px 3px;
+     -moz-border-radius: 0 0 3px 3px;
+          border-radius: 0 0 3px 3px;
 }
 
 .tile-progress.tile-red {
@@ -116,6 +116,7 @@
   */
 }
 
+/*
 .tile-progress.tile-blue {
   background-color: #0073b7;
   color: #fff;
@@ -145,6 +146,7 @@
   background-color: #ec3b83;
   color: #fff;
 }
+*/
 
 .tile-progress.tile-movies {
   background-color: #627a94;
@@ -171,3 +173,41 @@
 .tile-header a:hover {color: white;}  /* mouse over link */
 .tile-header a:active {color: white;}  /* selected link */
 
+
+.vcenter {
+    /*display: inline-block; */
+    vertical-align: middle;
+    /*float: none;*/
+}
+
+.saved-results {
+  height:430px;
+}
+
+.content {
+  display:table;
+  border:2px solid gray;
+
+  position:relative;
+
+  height:430px;
+
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
+}
+
+.content-clickable {
+  position:absolute;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  z-index:1;
+  text-align: center
+}
+
+.content-clickable-v2 {
+  width: 100px;
+  text-align: center;
+}
