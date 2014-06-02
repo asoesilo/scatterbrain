@@ -96,14 +96,12 @@
     </div>    
   </div>
 
-  <!-- Beginning of change -->
-
   <div ng-show="userRestaurants.length" class="container">
     <label>Where to eat?</label>
     <section class="userRestaurants">
-      <div ng-repeat="restaurant in userRestaurants | orderBy:'created_at':true" class="row well">
+      <div ng-repeat="restaurant in userRestaurants | orderBy:'created_at':true" class="row well" ng-show="isRestaurantInScope($index)">
         <div class="col-xs-1 content">
-          <a href="#">
+          <a ng-click="decrementUserRestaurantIndex()">
             <span class="content-clickable">
               <span class="fa fa-arrow-left fa-2x"></span>
             </span>
@@ -120,7 +118,7 @@
             </p>
         </div>
         <div class="col-xs-1 content">
-          <a href="#">
+          <a ng-click="incrementUserRestaurantIndex()">
             <div class="content-clickable">
               <span class="fa fa-arrow-right fa-2x"></span>
             </div>
@@ -130,13 +128,11 @@
     </section>
   </div>
 
-  <!-- End of change -->
-
   <div ng-show="userMovies.length">
     <label>What to watch?</label>
     <section class="userMovies">
       <ul>
-        <li ng-repeat="movie in userMovies | orderBy:'created_at':true">
+        <li ng-repeat="movie in userMovies | orderBy:'created_at':true" ng-show="isMovieInScope($index)">
           <h4>
             {{movie.title}} <span ng-show="movie.year">({{movie.year}})</span>
           </h4>
@@ -154,6 +150,12 @@
         </li>
       </ul>
     </section>
+    <button class="btn btn-default" ng-click="decrementUserMovieIndex()">
+      Previous
+    </button>
+    <button class="btn btn-default" ng-click="incrementUserMovieIndex()">
+      Next
+    </button>
   </div>
 
 </div>
