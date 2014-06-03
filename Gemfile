@@ -22,13 +22,10 @@ gem 'rottentomatoes'  # Gem for rottentomatoes
 
 gem 'fuzzy-string-match'
 
+gem 'pg'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-debugger'
   gem 'shotgun'
-  gem 'pg'
-end
-
-group :production do
-  gem 'pg'
 end
