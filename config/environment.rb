@@ -7,7 +7,7 @@ require 'active_support/all'
 require 'sinatra'
 require 'sinatra/activerecord'
 
-require 'pry'
+require 'pry' if development?
 require 'jsonable'
 
 require 'google_places'

@@ -3,7 +3,6 @@ source "https://rubygems.org"
 
 gem 'rake'
 gem 'activesupport'
-gem 'pg'
 gem 'jsonable'
 
 gem 'sinatra'
@@ -27,5 +26,9 @@ group :development, :test do
   gem 'pry'
   gem 'pry-debugger'
   gem 'shotgun'
-  gem 'sqlite3'
+  gem 'pg'
+end
+
+group :production do
+  gem 'pg'
 end

@@ -4,10 +4,14 @@ configure do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
 
-  set :database, {
-    adapter: "postgresql",
-    database: "scatterbrain"
-  }
+  if development?
+    set :database, {
+      adapter: "postgresql",
+      database: "scatterbrain"
+    }
+  else
+    set :database, ENV['DATABASE_URL']
+  end
 
   # set :database, {
   #   adapter: "postgresql",
