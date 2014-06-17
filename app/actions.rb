@@ -82,6 +82,8 @@ post '/user/restaurants' do
     category: Category.restaurant,
     provider: Provider.yelp,
     )
+
+  puts "Restaurant ID #{@params['yelp_business_id']} added successfully to user #{current_user.id}"
 end
 
 post '/user/movies' do
@@ -94,6 +96,8 @@ post '/user/movies' do
     category: Category.movie,
     provider: Provider.rottentomatoes,
     )
+
+  puts "Movie ID #{@params['rotten_tomatoes_movie_id']} added successfully to user #{current_user.id}"
 end
 
 get '/user/restaurants' do
