@@ -1,10 +1,11 @@
-Sinatra
+Scatter Brain
 =============
 
-Brought to you by Lighthouse Labs
+Brought to you by Slav Kurilyak and Andre Soesilo
 
-## Getting Started
+Scatter Brain is a smart to-do web application that allows users to search and maintain a list of restaurants and movies that the users want to record for future references. It is developed as part of a 4-day midterm project for Lighthouse Labs.
 
-1. `bundle install`
-2. `shotgun -p 3000 -o 0.0.0.0`
-3. Visit `http://localhost:3000/` in your browser
+This application is deployed on Heroku: http://scatter-brain.herokuapp.com/
+
+Technologies: Ruby, HTML, CSS, JavaScript, AngularJS, BootStrap, Sinatra, and PostgreSQL.
+
